@@ -1,4 +1,7 @@
-public class Node<T> {
+// Alex Nguyen
+// atn170001
+
+public class Node<T>{
 
     private T data;
     private Node<T> next;
@@ -9,6 +12,10 @@ public class Node<T> {
         next = null;
     }
 
+    public Node(T d)
+    {
+        data = d;
+    }
     public Node(T d, Node<T> n)
     {
         data = d;
