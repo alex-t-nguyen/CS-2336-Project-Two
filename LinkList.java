@@ -3,7 +3,6 @@
 
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class LinkList<T> {
     private Node<T> head;
@@ -70,18 +69,18 @@ public class LinkList<T> {
     }
 
     /**
-     * Displays players' data in file
-     * @param l linked list of players
+     * Displays players' data in file recursively
+     * @param h head node of list
+     * @param bWriter buffered writer that has the output file
      */
     public void displayPlayerData(Node<T> h, BufferedWriter bWriter) throws IOException
     {
-        //FileWriter output = new FileWriter("leaders.txt");
-        //BufferedWriter bWriter = new BufferedWriter(output);
         try {
-            if(h == null)
+            if(h == null) // Check if no node in list
                 return;
             else
             {  
+                // Display all stats of player
                 int numAtBats = ((Player)h.getData()).calculateNumAtBats(((Player)h.getData()).getHits(),((Player)h.getData()).getOuts(), ((Player)h.getData()).getStrikeouts());
                 int numPlateAppearances = ((Player)h.getData()).calculatePlateAppearances(((Player)h.getData()).getHits(), ((Player)h.getData()).getOuts(), ((Player)h.getData()).getStrikeouts(), ((Player)h.getData()).getWalks(), ((Player)h.getData()).getHitByPitches(), ((Player)h.getData()).getSacrifices());
                 bWriter.write(((Player)h.getData()).getName() + "\t");
@@ -95,7 +94,7 @@ public class LinkList<T> {
                 bWriter.write(String.format("%.3f", ((Player)h.getData()).calculateOnBasePercentage(((Player)h.getData()).getHits(), ((Player)h.getData()).getWalks(), ((Player)h.getData()).getHitByPitches(), numPlateAppearances)));
                 bWriter.write("\n");
                 h = h.getNext();
-                displayPlayerData(h, bWriter);
+                displayPlayerData(h, bWriter); // Recursive call of display function
             }
         }
         catch(IOException exp)
@@ -129,30 +128,6 @@ public class LinkList<T> {
     }
 
     /**
-     * Sorts arraylist of names
-     * @param list arraylist of names
-     */
-    public void sortArrayListNames(ArrayList<String> list)
-    {
-        //Collections.sort(list);
-        boolean swapped = true;
-        while(swapped)
-        {
-            swapped = false;
-            for(int i = 0; i < list.size() - 1; i++)
-            {
-                if(list.get(i).compareTo(list.get(i+1)) > 0)
-                {
-                    String temp = list.get(i);
-                    list.set(i , list.get(i+1));
-                    list.set(i+1, temp);
-                    swapped = true;
-                }
-            }
-        }
-    }
-
-    /**
      * Sorts linked list of players alphabetically by name
      * @param head of linked list to sort
      * @return head node of list
@@ -160,8 +135,8 @@ public class LinkList<T> {
     public Node<T> sortAlphabetically(Node<T> head)
     {  
         boolean swapped = true;
-        //Node<Player> head = (Node<Player>)h;
-        if(head == null || head.getNext() == null)
+        
+        if(head == null || head.getNext() == null) // If only 1 node in list or none
             return head;
         else
         {
@@ -172,14 +147,14 @@ public class LinkList<T> {
                 head = getHead();
                 while(iter != null)
                 {
-                    if(((Player)head.getData()).getName().compareTo(((Player)iter.getData()).getName()) > 0)
+                    // Compare the name of players
+                    if(((((Player)head.getData()).getName()).toLowerCase()).compareTo((((Player)iter.getData()).getName()).toLowerCase()) > 0)
                     {
+                        // Swap
                         Node<T> temp = new Node<>();
                         temp.setData(head.getData());
                         head.setData(iter.getData());
-                        //System.out.println("Before: " + temp.getData().getName());
                         iter.setData(temp.getData());
-                        //System.out.println("After: " + temp.getData().getName());
                         swapped = true;
                     }
                     head = head.getNext();
@@ -198,7 +173,7 @@ public class LinkList<T> {
     public Node<T> sortDescendingHits(Node<T> head)
     {
         boolean swapped = true;
-        if(head == null || head.getNext() == null)
+        if(head == null || head.getNext() == null) // If only 1 node in list or none
             return head;
         else
         {
@@ -209,8 +184,10 @@ public class LinkList<T> {
                 head = getHead();
                 while(iter != null)
                 {
+                    // Compare hits stat of players
                     if(((Player)head.getData()).getHits() < ((Player)iter.getData()).getHits())
                     {
+                        // Swap
                         Node<T> temp = new Node<>();
                         temp.setData(head.getData());
                         head.setData(iter.getData());
@@ -233,7 +210,7 @@ public class LinkList<T> {
     public Node<T> sortDescendingOuts(Node<T> head)
     {
         boolean swapped = true;
-        if(head == null || head.getNext() == null)
+        if(head == null || head.getNext() == null) // If only 1 node in list or none
             return head;
         else
         {
@@ -244,8 +221,10 @@ public class LinkList<T> {
                 head = getHead();
                 while(iter != null)
                 {
+                    // Compare outs stat of players
                     if(((Player)head.getData()).getOuts() > ((Player)iter.getData()).getOuts())
                     {
+                        // Swap
                         Node<T> temp = new Node<>();
                         temp.setData(head.getData());
                         head.setData(iter.getData());
@@ -265,10 +244,10 @@ public class LinkList<T> {
      * @param head head of linked list to sort
      * @return head node of list
      */
-    public Node<T> sortDescendingStrikeouts(Node<T> head)
+    public Node<T> sortAscendingStrikeouts(Node<T> head)
     {
         boolean swapped = true;
-        if(head == null || head.getNext() == null)
+        if(head == null || head.getNext() == null) // If only 1 node in list or none
             return head;
         else
         {
@@ -279,8 +258,10 @@ public class LinkList<T> {
                 head = getHead();
                 while(iter != null)
                 {
+                    // Compare strikeouts stat of players
                     if(((Player)head.getData()).getStrikeouts() > ((Player)iter.getData()).getStrikeouts())
                     {
+                        // Swap
                         Node<T> temp = new Node<>();
                         temp.setData(head.getData());
                         head.setData(iter.getData());
@@ -303,7 +284,7 @@ public class LinkList<T> {
     public Node<T> sortDescendingWalks(Node<T> head)
     {
         boolean swapped = true;
-        if(head == null || head.getNext() == null)
+        if(head == null || head.getNext() == null) // If only 1 node in list or none
             return head;
         else
         {
@@ -314,8 +295,10 @@ public class LinkList<T> {
                 head = getHead();
                 while(iter != null)
                 {
+                    // Compare walks stat of players
                     if(((Player)head.getData()).getWalks() < ((Player)iter.getData()).getWalks())
                     {
+                        // Swap
                         Node<T> temp = new Node<>();
                         temp.setData(head.getData());
                         head.setData(iter.getData());
@@ -338,7 +321,7 @@ public class LinkList<T> {
     public Node<T> sortDescendingHitByPitches(Node<T> head)
     {
         boolean swapped = true;
-        if(head == null || head.getNext() == null)
+        if(head == null || head.getNext() == null) // If only 1 node in list or none
             return head;
         else
         {
@@ -349,8 +332,10 @@ public class LinkList<T> {
                 head = getHead();
                 while(iter != null)
                 {
+                    // Compare hit by pitches stat of players
                     if(((Player)head.getData()).getHitByPitches() < ((Player)iter.getData()).getHitByPitches())
                     {
+                        // Swap
                         Node<T> temp = new Node<>();
                         temp.setData(head.getData());
                         head.setData(iter.getData());
@@ -373,7 +358,7 @@ public class LinkList<T> {
     public Node<T> sortDescendingSacrifices(Node<T> head)
     {
         boolean swapped = true;
-        if(head == null || head.getNext() == null)
+        if(head == null || head.getNext() == null) // If only 1 node in list or none
             return head;
         else
         {
@@ -384,8 +369,10 @@ public class LinkList<T> {
                 head = getHead();
                 while(iter != null)
                 {
+                    // Compare sacrifices stat of players
                     if(((Player)head.getData()).getSacrifices() < ((Player)iter.getData()).getSacrifices())
                     {
+                        // Swap
                         Node<T> temp = new Node<>();
                         temp.setData(head.getData());
                         head.setData(iter.getData());
@@ -408,7 +395,7 @@ public class LinkList<T> {
     public Node<T> sortDescendingBattingAverage(Node<T> head)
     {
         boolean swapped = true;
-        if(head == null || head.getNext() == null)
+        if(head == null || head.getNext() == null) // If only 1 node in list or none
             return head;
         else
         {
@@ -421,12 +408,14 @@ public class LinkList<T> {
                 head = getHead();
                 while(iter != null)
                 {
+                    // Compare batting average stat of players
                     headAtBats = ((Player)head.getData()).calculateNumAtBats(((Player)head.getData()).getHits(), ((Player)head.getData()).getOuts(), ((Player)head.getData()).getStrikeouts());          
                     iterAtBats = ((Player)iter.getData()).calculateNumAtBats(((Player)iter.getData()).getHits(), ((Player)iter.getData()).getOuts(), ((Player)iter.getData()).getStrikeouts());
                     headBattingAverage = ((Player)head.getData()).calculateBattingAverage(((Player)head.getData()).getHits(), headAtBats);
                     iterBattingAverage = ((Player)iter.getData()).calculateBattingAverage(((Player)iter.getData()).getHits(), iterAtBats);
                     if(headBattingAverage < iterBattingAverage)
                     {
+                        // Swap
                         Node<T> temp = new Node<>();
                         temp.setData(head.getData());
                         head.setData(iter.getData());
@@ -439,25 +428,6 @@ public class LinkList<T> {
             }
             return getHead();
         } 
-        /*if(l.getHead() == null)
-            return;
-        else
-        {
-            int prevAtBats, keyAtBats;
-            for(Node<T> first = l.getHead().getNext(); first != null; first = first.getNext())
-            {     
-                Node<T> key = first;
-                Node<T> prev = getPrevious(key);
-                prevAtBats = prev.getData().calculateNumAtBats(prev.getData().getHits(), prev.getData().getOuts(), prev.getData().getStrikeouts());          
-                keyAtBats = key.getData().calculateNumAtBats(key.getData().getHits(), key.getData().getOuts(), key.getData().getStrikeouts());
-                while(prev != null && prev.getData().calculateBattingAverage(prev.getData().getHits(), prevAtBats) < key.getData().calculateBattingAverage(key.getData().getHits(), keyAtBats))
-                {
-                    prev.setNext(prev);
-                    prev = getPrevious(prev);
-                }
-                prev.setNext(key);
-            }
-        }*/
     }
 
     /**
@@ -468,7 +438,7 @@ public class LinkList<T> {
     public Node<T> sortDescendingOnBasePercentage(Node<T> head)
     {
         boolean swapped = true;
-        if(head == null || head.getNext() == null)
+        if(head == null || head.getNext() == null) // If only 1 node in list or none
             return head;
         else
         {
@@ -481,12 +451,14 @@ public class LinkList<T> {
                 head = getHead();
                 while(iter != null)
                 {
+                    // Compare on-base percentage stat of players
                     headPlateAppearances = ((Player)head.getData()).calculatePlateAppearances(((Player)head.getData()).getHits(), ((Player)head.getData()).getOuts(), ((Player)head.getData()).getStrikeouts(), ((Player)head.getData()).getWalks(), ((Player)head.getData()).getHitByPitches(), ((Player)head.getData()).getSacrifices());         
                     iterPlateAppearances = ((Player)iter.getData()).calculatePlateAppearances(((Player)iter.getData()).getHits(), ((Player)iter.getData()).getOuts(), ((Player)iter.getData()).getStrikeouts(), ((Player)iter.getData()).getWalks(), ((Player)iter.getData()).getHitByPitches(), ((Player)iter.getData()).getSacrifices());
                     headOnBasePercentage = ((Player)head.getData()).calculateOnBasePercentage(((Player)head.getData()).getHits(), ((Player)head.getData()).getWalks(), ((Player)head.getData()).getHitByPitches(), headPlateAppearances);
                     iterOnBasePercentage = ((Player)iter.getData()).calculateOnBasePercentage(((Player)iter.getData()).getHits(), ((Player)iter.getData()).getWalks(), ((Player)iter.getData()).getHitByPitches(), iterPlateAppearances);
                     if(headOnBasePercentage < iterOnBasePercentage)
                     {
+                        // Swap
                         Node<T> temp = new Node<>();
                         temp.setData(head.getData());
                         head.setData(iter.getData());
@@ -499,25 +471,5 @@ public class LinkList<T> {
             }
             return getHead();
         } 
-        /*
-        if(l.getHead() == null)
-            return;
-        else
-        {
-            for(Node<T> first = l.getHead().getNext(); first != null; first = first.getNext())
-            {     
-                Node<T> key = first;
-                Node<T> prev = getPrevious(key);
-                
-                int prevPlateAppearances = prev.getData().calculatePlateAppearances(prev.getData().getHits(), prev.getData().getOuts(), prev.getData().getStrikeouts(), prev.getData().getWalks(), prev.getData().getHitByPitches(), prev.getData().getSacrifices());
-                int keyPlateAppearances = key.getData().calculatePlateAppearances(key.getData().getHits(), key.getData().getOuts(), key.getData().getStrikeouts(), key.getData().getWalks(), key.getData().getHitByPitches(), key.getData().getSacrifices());
-                while(prev != null && prev.getData().calculateOnBasePercentage(prev.getData().getHits(), prev.getData().getWalks(), prev.getData().getHitByPitches(), prevPlateAppearances) < key.getData().calculateOnBasePercentage(key.getData().getHits(), key.getData().getWalks(), key.getData().getHitByPitches(), keyPlateAppearances))
-                {
-                    prev.setNext(prev);
-                    prev = getPrevious(prev);
-                }
-                prev.setNext(key);
-            }
-        }*/
-    }  
+    } 
 }
