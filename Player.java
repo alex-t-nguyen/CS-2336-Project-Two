@@ -3,6 +3,7 @@
 
 public class Player {
 
+    // Player stats
     private int hit;
     private int out;
     private int strikeout;
@@ -11,6 +12,9 @@ public class Player {
     private int sacrifice;
     private String name;
 
+    /**
+     * Default constructor of player
+     */
     public Player()
     {
         hit = 0;
@@ -22,6 +26,16 @@ public class Player {
         name = null;
     }
 
+    /**
+     * Constructor for specific player
+     * @param h number of hits
+     * @param o number of outs
+     * @param k nmber of strikeouts
+     * @param w number of walks
+     * @param p number of hit by pitches
+     * @param s number of sacrifices
+     * @param n name of player
+     */
     public Player(int h, int o, int k, int w, int p, int s, String n)
     {
         hit = h;
@@ -149,6 +163,11 @@ public class Player {
     {
     	sacrifice = s;
     }
+
+    public void setName(String name)
+    {
+        this.name = name;
+    }
     /**
      * Parses batting record for one player
      * @param battingRecord the char array containing the batting record
@@ -193,7 +212,7 @@ public class Player {
      * @param strikeouts number of strikeouts
      * @return the number of at bats of player
      */
-    public static int calculateNumAtBats(int hits, int out, int strikeouts)
+    public int calculateNumAtBats(int hits, int out, int strikeouts)
     {
         return hits + out + strikeouts;
     }
@@ -204,10 +223,10 @@ public class Player {
      * @param numAtBats number of bats
      * @return the batting average of player
      */
-    public static double calculateBattingAverage(int h, int numAtBats)
+    public double calculateBattingAverage(int h, int numAtBats)
     {
         if(numAtBats == 0)
-            return 0;
+            return 0.0;
         else
             return (double)h / numAtBats;
     }
@@ -222,7 +241,7 @@ public class Player {
      * @param sacrifice number of sacrifices
      * @return the number of plate appearances of player
      */
-    public static int calculatePlateAppearances(int hits, int out, int strikeouts, int walks, int hitByPitch, int sacrifice)
+    public int calculatePlateAppearances(int hits, int out, int strikeouts, int walks, int hitByPitch, int sacrifice)
     {
         return hits + out + strikeouts + walks + hitByPitch + sacrifice;
     }
@@ -235,9 +254,12 @@ public class Player {
      * @param plateAppearances number of plate appearances     
      * @return the on base percentage of player
      */
-    public static double calculateOnBasePercentage(int h, int w, int p, int plateAppearances)
+    public double calculateOnBasePercentage(int h, int w, int p, int plateAppearances)
     {
-        return (double)(h + w + p) / plateAppearances;
+        if(plateAppearances == 0)
+            return 0.0;
+        else
+            return ((double)(h + w + p)) / plateAppearances;
     }
     
 }
