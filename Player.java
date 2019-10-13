@@ -1,7 +1,7 @@
 // Alex Nguyen
 // atn170001
 
-public class Player {
+public class Player{
 
     // Player stats
     private int hit;
@@ -167,42 +167,6 @@ public class Player {
     public void setName(String name)
     {
         this.name = name;
-    }
-    /**
-     * Parses batting record for one player
-     * @param battingRecord the char array containing the batting record
-     * @param h hit stat
-     * @param k strikeout stat
-     * @param w walk stat
-     * @param p hit by pitch stat
-     */
-    public static void parseBattingRecord(char[] battingRecordArray, int h, int k, int w, int p)
-    {
-      // Counter for each stat
-      int hit = 0, strikeout = 0, walk = 0, hitByPitch = 0;
-      char stat;
-        for(int i = 0; i < battingRecordArray.length; i++)
-        {
-            stat = battingRecordArray[i];
-
-            switch(stat)
-            {
-                case 'H': hit++; break;  
-
-                case 'K': strikeout++; break;
-
-                case 'W': walk++; break;
-
-                case 'P': hitByPitch++; break;
-
-                default: break;
-            }
-        }
-        // Puts number of each stat into array at player's index
-        h = hit;
-        k = strikeout;
-        w = walk;              
-        p = hitByPitch;
     }
     
     /**
