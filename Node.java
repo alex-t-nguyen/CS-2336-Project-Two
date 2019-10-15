@@ -3,6 +3,7 @@
 
 public class Node<T> implements Comparable<Node<T>>{
 
+    // Private data members
     private T data;
     private Node<T> next;
 
@@ -92,10 +93,33 @@ public class Node<T> implements Comparable<Node<T>>{
                 + "\n";
     }
 
+    /**
+     * Compares names of 2 node objects
+     * @param obj Node to compare to
+     * @return number to determine if names are equal or not
+     */
     @Override
     public int compareTo(Node<T> obj)
     {
         int result = ((Player)this.data).getName().toLowerCase().compareTo(((Player)obj.getData()).getName().toLowerCase());
+        if(result == 0)
+        {
+            return 0;
+        }
+        else
+        {
+            return result;
+        }
+    }
+
+    /**
+     * Overloaded compareTo to compare names of players by inputing specific name
+     * @param name name of player to compare to
+     * @return number to determine if names are equal or not
+     */
+    public int compareTo(String name)
+    {
+        int result = ((Player)this.data).getName().toLowerCase().compareTo(name.toLowerCase());
         if(result == 0)
         {
             return 0;
