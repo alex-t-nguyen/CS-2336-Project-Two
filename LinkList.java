@@ -123,11 +123,34 @@ public class LinkList<T> {
     /**
      * Deletes linked list
      */
-    public void destroyLinkList()
+    public void deleteList()
     {
         head = null;
     }
 
+    /**
+     * Searches linked list for node with specified name
+     * @param name name of player to search for
+     * @return node that has the same name
+     */
+    public Node<T> searchList(String name)
+    {
+        if(head == null)
+            return null;
+        else
+        {
+            for(Node<T> iter = head; iter != null; iter = iter.getNext())
+            {
+                if(iter.compareTo(name) == 0)
+                {
+                    return iter;
+                }
+                else
+                    continue;
+            }
+        }
+        return null;
+    }
     /**
      * Sorts linked list of players alphabetically by name
      * @param head of linked list to sort
@@ -165,4 +188,5 @@ public class LinkList<T> {
             return getHead();
         }
     } 
+
 }
