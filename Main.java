@@ -3,7 +3,7 @@
 import java.util.*;
 import java.io.*;
 public class Main {
-    static final double THRESHOLD = 0.00000001;
+    static final double THRESHOLD = 0.00000001; // Threshold value to compare doubles
 	public static void main(String[] args) throws FileNotFoundException, IOException
 	{
 		Scanner fileReader = null;
@@ -37,22 +37,16 @@ public class Main {
             }
             else
             {
-                for(Node<Player> n = list.getHead(); n != null; n = n.getNext())    // Checks for duplicate names in file
+                Node<Player> n = list.searchList(name); // Searches list for player with same name
+                if(n != null) // If duplicate names in files, combine into 1 player by adding stats to first occurence of player
                 {
-                    if(n.getData().getName().equals(name)) // If duplicate names in files, combine into 1 player by adding stats to first occurence of player
-                    {   
-                        player = n.getData();
-                        multipleEntries = true;
-                    }
-                    if(multipleEntries)
-                        break;
-                    else if(n.getNext() == null) // If no duplicate names in file, create new player
-                    {
-                        player = new Player();
-                        player.setName(name);
-                    }
-                    else
-                        continue;
+                    player = n.getData();
+                    multipleEntries = true;
+                }
+                else // If no duplicate names in file, create new player
+                {
+                    player = new Player();
+                    player.setName(name);
                 }
             }
             String battingRecord = line.substring(line.indexOf(' ') + 1, line.length()); // Gets player's batting record as a string
@@ -200,7 +194,7 @@ public class Main {
 
                     // If batting average of other players is equal to 1st place leader print out
                     // player's name
-                    if (iterBattingAverage == headBattingAverage) {
+                    if (Math.abs(iterBattingAverage - headBattingAverage) < THRESHOLD) {
                         // Add tied leaders to list
                         newNode = new Node<>(iter.getData());
                         firstLeaders.appendList(newNode);
@@ -278,7 +272,7 @@ public class Main {
                                 numAtBats);
 
                         // If batting average of other players is equal to 2st place leader
-                        if (iterBattingAverage == headBattingAverage) {
+                        if (Math.abs(iterBattingAverage - headBattingAverage) < THRESHOLD) {
                             // Add player's name to second leaders list
                             newNode = new Node<>(iter.getData());
                             secondLeaders.appendList(newNode);
@@ -350,7 +344,7 @@ public class Main {
                                 numAtBats);
 
                         // If batting average of other players is equal to 3rd place
-                        if (iterBattingAverage == headBattingAverage) {
+                        if (Math.abs(iterBattingAverage - headBattingAverage) < THRESHOLD) {
                             // Add player's name to third leaders list
                             newNode = new Node<>(iter.getData());
                             thirdLeaders.appendList(newNode);
